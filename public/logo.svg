@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Y shape - left arm -->
+  <path d="M 60 20 L 100 80 L 100 160 L 85 160 L 85 87 L 47 20 Z" fill="url(#logoGrad)" />
+  <!-- Y shape - right arm -->
+  <path d="M 140 20 L 100 80 L 115 80 L 153 20 Z" fill="url(#logoGrad)" />
+  <!-- Inner V shape -->
+  <path d="M 85 100 L 100 130 L 115 100 L 130 120 L 100 155 L 70 120 Z" fill="url(#logoGrad)" opacity="0.7" />
+  <!-- Sparkle -->
+  <circle cx="115" cy="25" r="4" fill="#c084fc" />
+  <line x1="115" y1="15" x2="115" y2="35" stroke="#c084fc" stroke-width="1.5" />
+  <line x1="105" y1="25" x2="125" y2="25" stroke="#c084fc" stroke-width="1.5" />
+</svg>
