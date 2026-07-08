@@ -23,7 +23,6 @@ const categories = [
     name: 'Frontend',
     skills: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
   },
-  { name: 'Backend & Tools', skills: ['Node.js', 'Git', 'GitHub', 'EmailJS'] },
 ]
 
 export default function Skills() {

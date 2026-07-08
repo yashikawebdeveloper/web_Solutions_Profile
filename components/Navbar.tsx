@@ -9,7 +9,6 @@ const navLinks = [
   { name: 'About', href: '#about' },
   { name: 'Services', href: '#services' },
   { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -67,7 +66,7 @@ export default function Navbar() {
             <div className="relative w-10 h-10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo.png"
+                src="/logo.svg"
                 alt="Yashika Web Developer Logo"
                 className="w-10 h-10 object-contain"
                 onError={(e) => {
@@ -120,7 +119,7 @@ export default function Navbar() {
               onClick={() => handleNavClick('#contact')}
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold btn-primary glow-purple transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25"
             >
-              Hire Me
+              Contact Me
             </motion.button>
           </div>
 
@@ -180,7 +179,7 @@ export default function Navbar() {
                   onClick={() => handleNavClick('#contact')}
                   className="mt-2 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold text-center btn-primary"
                 >
-                  Hire Me
+                  Contact Me
                 </motion.button>
               </div>
             </motion.div>
