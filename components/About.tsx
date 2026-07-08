@@ -79,16 +79,8 @@ export default function About() {
                 </p>
               </div>
 
-              {/* Skills chips */}
-              <div className="flex flex-wrap gap-2">
-                {['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Framer Motion'].map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 rounded-full text-sm glass border border-purple-500/20 text-purple-300"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-gray-400">
+                I focus on thoughtful strategy, clean interfaces, and results-driven design so your website feels polished and easy to use.
               </div>
 
               {/* CTA */}
