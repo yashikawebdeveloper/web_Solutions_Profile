@@ -41,26 +41,6 @@ const packages = [
     popular: true,
     cta: 'Most Popular',
   },
-  {
-    name: 'Enterprise',
-    price: '₹29,999',
-    originalPrice: '₹49,999',
-    description: 'Complete web solution for established businesses with complex requirements.',
-    features: [
-      'Custom Multi-Page Website',
-      'E-Commerce Integration',
-      'CMS / Admin Panel',
-      'Full SEO Optimization',
-      'Performance Audit',
-      'Animations & Interactions',
-      'Unlimited Revisions',
-      '30-Day Delivery',
-      '3 Months Support',
-    ],
-    gradient: 'from-indigo-600 to-purple-600',
-    popular: false,
-    cta: 'Contact Me',
-  },
 ]
 
 export default function HireMe() {
@@ -139,7 +119,7 @@ export default function HireMe() {
                 onClick={scrollToContact}
                 className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold text-lg btn-primary glow-purple flex items-center gap-2"
               >
-                <span>🚀</span> Hire Me Now
+                <span>🚀</span> Contact Me Now
               </motion.button>
 
               <motion.button

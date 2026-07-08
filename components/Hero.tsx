@@ -145,54 +145,13 @@ export default function Hero() {
               <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              Hire Me
+              Contact Me
             </motion.button>
           </motion.div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-wrap items-center justify-center gap-8 sm:gap-16"
-          >
-            {[
-              { number: '50+', label: 'Projects Completed' },
-              { number: '30+', label: 'Happy Clients' },
-              { number: '2+', label: 'Years Experience' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl font-bold gradient-text font-display">{stat.number}</div>
-                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-2 cursor-pointer"
-          onClick={() => scrollTo('about')}
-        >
-          <span className="text-xs text-gray-500">Scroll Down</span>
-          <div className="w-5 h-8 rounded-full border-2 border-gray-600 flex items-start justify-center pt-1.5">
-            <motion.div
-              animate={{ y: [0, 8, 0], opacity: [1, 0, 1] }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-              className="w-1.5 h-1.5 bg-purple-400 rounded-full"
-            />
-          </div>
-        </motion.div>
-      </motion.div>
     </section>
   )
 }
