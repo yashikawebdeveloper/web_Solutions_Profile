@@ -1,17 +1,29 @@
 'use client'
 
-import { useState, useRef, FormEvent } from 'react'
+import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import toast from 'react-hot-toast'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 const EMAILJS_SERVICE_ID = 'service_2jg5wfp'
 const EMAILJS_TEMPLATE_ID = 'template_gdfb696'
 const EMAILJS_PUBLIC_KEY = 'Ryxic2gXiVQ876a8u'
 
+const schema = yup.object({
+  name: yup.string().required('Name is required'),
+  email: yup.string().email('Invalid email address').required('Email is required'),
+  phone: yup.string().matches(/^\d{10}$/, 'Phone number must be exactly 10 digits').required('Phone is required'),
+  subject: yup.string().required('Subject is required'),
+  message: yup.string().required('Message is required'),
+}).required()
+
 interface FormData {
   name: string
   email: string
+  phone: string
   subject: string
   message: string
 }
@@ -21,26 +33,17 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
-  const [form, setForm] = useState<FormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
   })
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-
-    if (!form.name || !form.email || !form.subject || !form.message) {
-      toast.error('Please fill in all fields.')
-      return
-    }
-
+  const onSubmit = async (data: FormData) => {
     setLoading(true)
 
     try {
@@ -52,7 +55,7 @@ export default function Contact() {
       )
 
       toast.success('🎉 Message sent! I\'ll get back to you soon.', { duration: 5000 })
-      setForm({ name: '', email: '', subject: '', message: '' })
+      reset()
     } catch {
       toast.error('❌ Failed to send message. Please try again or email me directly.')
     } finally {
@@ -79,14 +82,12 @@ export default function Contact() {
       icon: '🌍',
       label: 'Location',
       value: 'India',
-      href: '#',
       color: 'green',
     },
     {
       icon: '⏰',
       label: 'Response Time',
       value: 'Within 24 hours',
-      href: '#',
       color: 'orange',
     },
   ]
@@ -224,7 +225,7 @@ export default function Contact() {
           >
             <form
               ref={formRef}
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(onSubmit)}
               className="glass border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5"
             >
               <h3 className="text-xl font-bold text-white font-display">Send me a message</h3>
@@ -237,13 +238,10 @@ export default function Contact() {
                   <input
                     id="contact-name"
                     type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="John Doe"
-                    required
-                    className="w-full px-4 py-3 rounded-xl input-glass text-sm"
+                    {...register('name')}
+                    className={`w-full px-4 py-3 rounded-xl input-glass text-sm ${errors.name ? 'border-red-500 focus:border-red-500' : ''}`}
                   />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="contact-email" className="text-sm text-gray-400 font-medium">
@@ -252,30 +250,38 @@ export default function Contact() {
                   <input
                     id="contact-email"
                     type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="john@example.com"
-                    required
-                    className="w-full px-4 py-3 rounded-xl input-glass text-sm"
+                    {...register('email')}
+                    className={`w-full px-4 py-3 rounded-xl input-glass text-sm ${errors.email ? 'border-red-500 focus:border-red-500' : ''}`}
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="contact-subject" className="text-sm text-gray-400 font-medium">
-                  Subject *
-                </label>
-                <input
-                  id="contact-subject"
-                  type="text"
-                  name="subject"
-                  value={form.subject}
-                  onChange={handleChange}
-                  placeholder="I need a website for my business"
-                  required
-                  className="w-full px-4 py-3 rounded-xl input-glass text-sm"
-                />
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label htmlFor="contact-phone" className="text-sm text-gray-400 font-medium">
+                    Phone No. *
+                  </label>
+                  <input
+                    id="contact-phone"
+                    type="tel"
+                    {...register('phone')}
+                    className={`w-full px-4 py-3 rounded-xl input-glass text-sm ${errors.phone ? 'border-red-500 focus:border-red-500' : ''}`}
+                  />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="contact-subject" className="text-sm text-gray-400 font-medium">
+                    Subject *
+                  </label>
+                  <input
+                    id="contact-subject"
+                    type="text"
+                    {...register('subject')}
+                    className={`w-full px-4 py-3 rounded-xl input-glass text-sm ${errors.subject ? 'border-red-500 focus:border-red-500' : ''}`}
+                  />
+                  {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject.message}</p>}
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -284,14 +290,11 @@ export default function Contact() {
                 </label>
                 <textarea
                   id="contact-message"
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  placeholder="Tell me about your project, goals, and timeline..."
-                  required
+                  {...register('message')}
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl input-glass text-sm resize-none"
+                  className={`w-full px-4 py-3 rounded-xl input-glass text-sm resize-none ${errors.message ? 'border-red-500 focus:border-red-500' : ''}`}
                 />
+                {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
               </div>
 
               <motion.button
@@ -300,8 +303,8 @@ export default function Contact() {
                 whileHover={!loading ? { scale: 1.02 } : {}}
                 whileTap={!loading ? { scale: 0.98 } : {}}
                 className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all duration-300 flex items-center justify-center gap-3 btn-primary ${loading
-                    ? 'bg-gray-700 cursor-not-allowed text-gray-400'
-                    : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white glow-purple hover:shadow-lg hover:shadow-purple-500/25'
+                  ? 'bg-gray-700 cursor-not-allowed text-gray-400'
+                  : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white glow-purple hover:shadow-lg hover:shadow-purple-500/25'
                   }`}
               >
                 {loading ? (
